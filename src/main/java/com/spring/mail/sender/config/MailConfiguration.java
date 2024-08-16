@@ -13,6 +13,9 @@ public class MailConfiguration {
     @Value("${email.sender}")
     private String emailUser;
 
+    @Value("${email.password}")
+    private String emailPassword;
+
     @Bean
     public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
@@ -20,13 +23,13 @@ public class MailConfiguration {
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
         mailSender.setUsername(emailUser);
-        mailSender.setPassword("password");
+        mailSender.setPassword(emailPassword);
 
         Properties props = mailSender.getJavaMailProperties();
 
         props.put("mail.transport.protocol", "smtp");
         props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls", "true");
+        props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.debug", "true");
 
         return mailSender;
